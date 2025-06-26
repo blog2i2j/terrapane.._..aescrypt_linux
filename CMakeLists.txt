@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 # Define the AES Crypt GUI project for Linux and FreeBSD
 project(aescrypt_gui
-        VERSION 4.3.0
+        VERSION 4.3.1
         DESCRIPTION "AES Crypt Graphical User Interface (GUI) for Linux or FreeBSD"
         HOMEPAGE_URL "https://www.aescrypt.com")
 
