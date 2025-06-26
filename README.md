@@ -9,7 +9,7 @@ To build a release build on Linux or FreeBSD, change directories to the root of
 the source directory and issue these commands:
 
 ```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -Daescrypt_ENABLE_LICENSE_MODULE:BOOL=OFF
+cmake -S . -B build -DCMAKE_BUILD_TYPE:STRING=Release -Daescrypt_ENABLE_LICENSE_MODULE:BOOL=OFF
 cmake --build build --parallel
 ```
 
