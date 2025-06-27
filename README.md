@@ -1,12 +1,12 @@
-# AES Crypt Linux and FreeBSD GUI Repository
+# AES Crypt GUI Repository for Linux/Unix Systems
 
 This project contains the AES Crypt Graphical User Interface (GUI) package
-for Linux and FreeBSD.
+for Linux/Unix systems.
 
 ## Building the package
 
-To build a release build on Linux or FreeBSD, change directories to the root of
-the source directory and issue these commands:
+To create a release build, change directories to the root of the source
+directory and issue these commands:
 
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE:STRING=Release -Daescrypt_ENABLE_LICENSE_MODULE:BOOL=OFF
@@ -29,6 +29,6 @@ this version to do a manual installation.
 
 ## Usage
 
-One may use AES Crypt either from the Linux desktop or from the command-line.
+One may use AES Crypt either from the desktop or from the command-line.
 Visit the Linux/FreeBSD [usage page](https://www.aescrypt.com/linux_aes_crypt.html)
 for details about using AES Crypt for the desktop or command-line.

@@ -3,6 +3,8 @@
 v4.3.1
 
 - Updated AES Crypt CLI dependency
+- Updated CMake configuration to use UNIX rather than Linux or BSD to facilitate
+  building on systems more broadly
 
 v4.3.0
 

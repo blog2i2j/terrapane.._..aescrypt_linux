@@ -9,7 +9,7 @@ endif()
 # Create the aescrypt.desktop file with expected install paths
 configure_file(aescrypt.desktop.in aescrypt.desktop @ONLY)
 
-if(aescrypt_linux_INSTALL AND (LINUX OR BSD))
+if(aescrypt_gui_INSTALL AND (UNIX AND NOT APPLE))
     include(GNUInstallDirs)
     install(PROGRAMS aescrypt-gui DESTINATION ${CMAKE_INSTALL_BINDIR})
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/aescrypt.desktop DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications/)
