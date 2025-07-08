@@ -63,6 +63,55 @@ sub PerformAction(@)
     return ($result, $output);
 }
 
+# Find a UTF-8 variant of a language or fallback to C.utf8
+sub FindUTF8Locale($)
+{
+    my ($language) = @_;
+    my @candidates = ("$language.UTF-8", "$language.utf8", "C.UTF-8", "C.utf8");
+
+    # Determine what locales exist on the system
+    my @locales = qx(locale -a 2>/dev/null);
+    chomp @locales;
+
+    foreach my $locale (@candidates)
+    {
+        return $locale if grep { $_ eq $locale } @locales;
+    }
+
+     # No UTF-8 locale found
+    return undef;
+}
+
+# Ensure the user's locale is correct and set it if it not
+sub CheckAndSetLocale()
+{
+    # Get current locale
+    my $locale = $ENV{LC_ALL} || $ENV{LC_CTYPE} || $ENV{LANG} || '';
+
+    # Check if locale is already UTF-8
+    return (0, "") if ($locale =~ /UTF-?8/i);
+
+    # If LC_ALL is set, it overrides LC_CTYPE and it's not safe to override
+    if ($ENV{LC_ALL})
+    {
+        return (1, "Error: LC_ALL is set to a non-UTF-8 locale ($ENV{LC_ALL})");
+    }
+
+    # Extract language component (e.g., fr_FR from fr_FR.ISO88591)
+    my ($language) = $locale =~ /^([a-zA-Z_]+)(?:\..*)?$/;
+    $language ||= 'C';  # Default to 'C' if no language component
+
+    # Find a UTF-8 locale for the target language
+    my $utf8_locale = FindUTF8Locale($language);
+    if ($utf8_locale)
+    {
+        $ENV{LC_CTYPE} = $utf8_locale;
+        return (0, "");
+    }
+
+    return (1, "A UTF-8 locale is required to operate correctly");
+}
+
 # Try to determine the type of desktop
 my $desktop = $ENV{"XDG_CURRENT_DESKTOP"};
 
@@ -108,6 +157,21 @@ else
 if ($#ARGV == -1)
 {
     PerformAction(0, @error_message, "No input files were given");
+    exit(-1);
+}
+
+# Ensure user's locale is set to one that uses UTF-8
+(my $locale_result, my $locale_error) = CheckAndSetLocale();
+if ($locale_result != 0)
+{
+    # If there is an error with no error text, insert a generic error string
+    if (length($locale_error) == 0)
+    {
+        $locale_error = "Problem setting locale to UTF-8";
+    }
+
+    PerformAction(0, @error_message, $locale_error);
+
     exit(-1);
 }
 

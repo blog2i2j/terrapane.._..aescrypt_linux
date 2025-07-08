@@ -1,5 +1,9 @@
 # Change Log
 
+4.3.2 (in progress)
+
+- Enforce setting UTF-8 for the character encoding (LC_TYPE locale setting)
+
 v4.3.1
 
 - Updated AES Crypt CLI dependency
