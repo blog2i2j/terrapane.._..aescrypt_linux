@@ -1,8 +1,9 @@
 # Change Log
 
-4.3.1.1 (in progress)
+4.4.0 (in progress)
 
-- Enforce setting UTF-8 for the character encoding (LC_TYPE locale setting)
+- Allow launching AES Crypt directly to select files
+- Enforce setting UTF-8 for the character encoding (LC\_TYPE locale setting)
 - Change package requirements related to Perl
 
 v4.3.1
