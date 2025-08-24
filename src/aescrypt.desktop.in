@@ -2,8 +2,8 @@
 Type=Application
 Version=1.0
 Name=AES Crypt
-Comment=Encrypt or Decrypt a file using AES Crypt
-Icon=@INSTALL_PATH@/share/icons/hicolor/scalable/apps/aescrypt.svg
+Comment=Encrypt or Decrypt files using AES Crypt
+Icon=@INSTALL_PATH@/share/icons/hicolor/scalable/apps/aescrypt_lock.svg
 Exec=@INSTALL_PATH@/bin/aescrypt-gui %F
 Terminal=false
 MimeType=all/allfiles;application/aescrypt
