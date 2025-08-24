@@ -142,7 +142,7 @@ my @error_message;
 my @info_message;
 if ($dialog eq "kdialog")
 {
-    @file_selection = ("kdialog", "--getopenfilename", "", "*", "--title", "AES Crypt (Select Files to Encrypt or Decrypt)");
+    @file_selection = ("kdialog", "--getopenfilename", "", "*", "--multiple", "--separate-output", "--title", "AES Crypt (Select Files to Encrypt or Decrypt)");
     @password_prompt = ("kdialog", "--title", "AES Crypt", "--password", "Enter password");
     @password_prompt_verify = ("kdialog", "--title", "AES Crypt (Verify)", "--password", "Enter password");
     @error_message = ("kdialog", "--title", "AES Crypt", "--error");
