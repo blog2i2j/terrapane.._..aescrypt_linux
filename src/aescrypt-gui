@@ -134,12 +134,15 @@ if (!IsAvailable($dialog))
 }
 
 # Set the dialog parameters
+my @input_files;
+my @file_selection;
 my @password_prompt;
 my @password_prompt_verify;
 my @error_message;
 my @info_message;
 if ($dialog eq "kdialog")
 {
+    @file_selection = ("kdialog", "--getopenfilename", "", "*", "--title", "AES Crypt (Select Files to Encrypt or Decrypt)");
     @password_prompt = ("kdialog", "--title", "AES Crypt", "--password", "Enter password");
     @password_prompt_verify = ("kdialog", "--title", "AES Crypt (Verify)", "--password", "Enter password");
     @error_message = ("kdialog", "--title", "AES Crypt", "--error");
@@ -147,17 +150,11 @@ if ($dialog eq "kdialog")
 }
 else
 {
+    @file_selection = ("zenity", "--file-selection", "--multiple", "--separator=\n", "--title", "AES Crypt (Select Files to Encrypt or Decrypt)");
     @password_prompt = ("zenity", "--title", "AES Crypt", "--password");
     @password_prompt_verify = ("zenity", "--title", "AES Crypt (Verify)", "--password");
     @error_message = ("zenity", "--title", "AES Crypt", "--width", "350", "--error", "--text");
     @info_message = ("zenity", "--title", "AES Crypt", "--width", "350", "--info", "--text");
-}
-
-# If no arguments were given, present an error dialog and exit
-if ($#ARGV == -1)
-{
-    PerformAction(0, @error_message, "No input files were given");
-    exit(-1);
 }
 
 # Ensure user's locale is set to one that uses UTF-8
@@ -175,26 +172,56 @@ if ($locale_result != 0)
     exit(-1);
 }
 
-# It is assumed that all files will be encrypted or decrypted, with the
-# choice based on the first file seen; assume encryption initially
-my $mode = "e";
-if ($ARGV[0] =~ /\.aes$/i)
+# If no arguments were given, prompt the user for files to encrypt or decrypt
+if ($#ARGV == -1)
 {
-    # It appears the file ends in .aes, so mode is decryption
-    $mode = "d";
+    my ($file_result, $files) = PerformAction(0, @file_selection);
+    exit(-1) if ($file_result != 0);
+
+    # Put the filenames into an array
+    @input_files = split(/\n/, $files);
+
+    # If the array is empty, the user selected nothing
+    exit(0) if ($#input_files == -1);
+}
+else
+{
+    # Copy the filenames into @files for consistent handling
+    @input_files = @ARGV;
 }
 
-# If decrypting, ensure all files end in .aes
-if ($mode eq "d")
+# Define a variable to indicate the operating mode (encryption or decryption)
+my $mode = "";
+
+# One must either encrypt or decrypt, so check for mixed file set
 {
-    foreach my $file (@ARGV)
+    my $aes_files = 0;
+    my $non_aes_files = 0;
+
+    foreach my $file (@input_files)
     {
-        if (!($file =~ /\.aes$/i))
+        # Check if the file ends in .aes
+        if ($file =~ /\.aes$/i)
         {
-            PerformAction(0, @error_message, "At least one of the input files does not end with .aes");
+            $aes_files++;
+            $mode = "d";
+        }
+        else
+        {
+            $non_aes_files++;
+            $mode = "e";
+        }
+
+        # Prevent mixed mode operation
+        if (($aes_files > 0) && ($non_aes_files > 0))
+        {
+            PerformAction(0, @error_message, "Please select either .aes or non-.aes files, but not both at the same time");
             exit(-1);
         }
     }
+
+    # Set the operating mode to encrypt or decrypt
+    $mode = ($aes_files > 0) ? "d" : "e";
 }
 
 # Define the variable to store the password
@@ -238,7 +265,7 @@ if ($mode eq "e")
 }
 
 # Iterate over each file to perform encryption
-foreach my $file (@ARGV)
+foreach my $file (@input_files)
 {
     # Encrypt or decrypt the file
     my ($aes_result, $output) = PerformAction(1, "aescrypt", "-q", "-$mode", "-p", "$password", "$file");
