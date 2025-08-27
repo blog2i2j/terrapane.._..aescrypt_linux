@@ -5,6 +5,7 @@
 - Allow launching AES Crypt directly to select files
 - Enforce setting UTF-8 for the character encoding (LC\_TYPE locale setting)
 - Change package requirements related to Perl
+- Updated package icons for consistency across platforms
 
 v4.3.1
 
