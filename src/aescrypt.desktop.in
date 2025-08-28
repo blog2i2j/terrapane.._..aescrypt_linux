@@ -6,5 +6,5 @@ Comment=Encrypt or Decrypt files using AES Crypt
 Icon=aescrypt_lock
 Exec=@INSTALL_PATH@/bin/aescrypt-gui %F
 Terminal=false
-MimeType=all/allfiles;application/aescrypt
+MimeType=application/aescrypt
 Categories=Utility;Security;
