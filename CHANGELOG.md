@@ -1,11 +1,12 @@
 # Change Log
 
-4.4.0 (in progress)
+4.4.0
 
 - Allow launching AES Crypt directly to select files
 - Enforce setting UTF-8 for the character encoding (LC\_TYPE locale setting)
 - Change package requirements related to Perl
 - Updated package icons for consistency across platforms
+- Updated dependencies
 
 v4.3.1
 

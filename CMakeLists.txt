@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 # Define the AES Crypt GUI project for Unix-Like Systems
 project(aescrypt_gui
-        VERSION 4.3.1.2
+        VERSION 4.4.0.0
         DESCRIPTION "AES Crypt Graphical User Interface (GUI) for Unix-Like Systems"
         HOMEPAGE_URL "https://www.aescrypt.com")
 
@@ -16,6 +16,7 @@ endif()
 # Option to control ability to install the program
 option(aescrypt_gui_INSTALL "Install the AES Crypt GUI Program" ON)
 
+# Ensure testing is enabled to surface tests in dependencies
 include(CTest)
 
 add_subdirectory(dependencies)
