@@ -23,7 +23,6 @@ if(aescrypt_gui_INSTALL)
         set(CPACK_RPM_PACKAGE_LICENSE "Commercial; See https://www.aescrypt.com/license.html")
         execute_process(COMMAND rpm --version OUTPUT_VARIABLE RPM_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
         string(REGEX MATCH "[0-9]+\\.[0-9]+" RPM_MAJOR_MINOR "${RPM_VERSION}")
-        message(STATUS "RPM vesion is ${RPM_MAJOR_MINOR}")
         # Only RPM 4.13 or later supports "or" syntax
         if(RPM_MAJOR_MINOR VERSION_GREATER_EQUAL "4.13")
             set(CPACK_RPM_PACKAGE_REQUIRES "glibc, libstdc++, (perl >= 5.10 or perl-interpreter >= 5.10), zenity >= 3.0")
