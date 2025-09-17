@@ -4,7 +4,8 @@ cmake_minimum_required(VERSION 3.21)
 project(aescrypt_gui
         VERSION 4.4.0.0
         DESCRIPTION "AES Crypt Graphical User Interface (GUI) for Unix-Like Systems"
-        HOMEPAGE_URL "https://www.aescrypt.com")
+        HOMEPAGE_URL "https://www.aescrypt.com"
+        LANGUAGES CXX)
 
 # Tests are built by default when this is a top-level project
 if(PROJECT_IS_TOP_LEVEL)
