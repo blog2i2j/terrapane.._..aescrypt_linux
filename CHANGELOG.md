@@ -1,5 +1,9 @@
 # Change Log
 
+4.4.1 (In progress)
+
+- Minor CMake changes
+
 4.4.0
 
 - Allow launching AES Crypt directly to select files
