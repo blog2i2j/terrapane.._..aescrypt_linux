@@ -2,6 +2,7 @@
 
 4.4.1 (In progress)
 
+- Changed cpack dependencies for newer RPMs
 - Minor CMake changes
 
 4.4.0
